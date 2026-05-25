@@ -13,7 +13,7 @@
     "react": "^18",
     "react-dom": "^18",
     "crypto-js": "^4.2.0",
-    "secrets.js-34r7h": "^1.0.0",
+    "secrets.js": "^1.0.0",
     "lucide-react": "^0.383.0"
   },
   "devDependencies": {
