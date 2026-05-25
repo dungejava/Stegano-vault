@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --ink: #0a0a0a;
+  --paper: #f5f0e8;
+  --ghost: #1a1a2e;
+  --signal: #00ff9f;
+  --warn: #ff3b3b;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--ghost);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--signal);
+  color: var(--ink);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: var(--signal); }
+
+/* Grid noise overlay */
+.noise::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.35;
+}
+
+.scanline::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(transparent, rgba(0, 255, 159, 0.08), transparent);
+  animation: scan 4s linear infinite;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+@keyframes scan {
+  from { transform: translateY(-10px); }
+  to { transform: translateY(100vh); }
+}
+
+/* Tab styles */
+.tab-active {
+  border-bottom: 2px solid var(--signal);
+  color: var(--signal);
+}
+
+/* Drop zone */
+.drop-zone {
+  border: 1px dashed rgba(0, 255, 159, 0.3);
+  transition: all 0.2s ease;
+}
+.drop-zone:hover, .drop-zone.drag-over {
+  border-color: var(--signal);
+  background: rgba(0, 255, 159, 0.04);
+}
+
+/* Glitch text */
+@keyframes glitch {
+  0% { clip-path: inset(0 0 95% 0); transform: translate(-2px, 0); }
+  10% { clip-path: inset(20% 0 60% 0); transform: translate(2px, 0); }
+  20% { clip-path: inset(80% 0 5% 0); transform: translate(-1px, 0); }
+  30% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+  100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+}
+
+.glitch {
+  position: relative;
+}
+.glitch::before {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  color: var(--signal);
+  animation: glitch 5s infinite;
+  opacity: 0.6;
+}
+
+/* Button */
+.btn-primary {
+  background: var(--signal);
+  color: var(--ink);
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: all 0.15s ease;
+}
+.btn-primary:hover:not(:disabled) {
+  background: #00e68a;
+  box-shadow: 0 0 20px rgba(0, 255, 159, 0.4);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.btn-ghost {
+  border: 1px solid rgba(245, 240, 232, 0.2);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  transition: all 0.15s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--signal);
+  color: var(--signal);
+}
+
+/* Input */
+.input-field {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  color: var(--paper);
+  font-family: 'IBM Plex Mono', monospace;
+  transition: border-color 0.2s;
+}
+.input-field:focus {
+  outline: none;
+  border-color: var(--signal);
+  box-shadow: 0 0 0 1px rgba(0, 255, 159, 0.2);
+}
+.input-field::placeholder { color: rgba(245,240,232,0.3); }
+
+/* Share card */
+.share-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(245,240,232,0.1);
+  transition: border-color 0.2s;
+}
+.share-card:hover { border-color: rgba(0,255,159,0.3); }
+
+/* Progress bar */
+.progress-bar {
+  height: 2px;
+  background: rgba(0,255,159,0.2);
+}
+.progress-fill {
+  height: 100%;
+  background: var(--signal);
+  transition: width 0.3s ease;
+}
+
+/* Status dot */
+.dot-green { background: var(--signal); box-shadow: 0 0 6px var(--signal); }
+.dot-red { background: var(--warn); box-shadow: 0 0 6px var(--warn); }
+.dot-yellow { background: #ffcc00; box-shadow: 0 0 6px #ffcc00; }
